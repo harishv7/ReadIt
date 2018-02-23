@@ -79,11 +79,15 @@ export default class ReadIt extends Component {
                         <View style={[styles.voteWrapper]}>
                             <View style={styles.vote}>
                                 <Text style={styles.voteNumber}>{item.upvotes}</Text>
-                                <Text style={styles.voteText} onPress={() => this.handleUpvote(index)}>Upvote</Text>
+                                <TouchableHighlight style={styles.voteButton} onPress={() => this.handleUpvote(index)} underlayColor='gray'>
+                                    <Text style={styles.voteText}>Upvote</Text>
+                                </TouchableHighlight>
                             </View>
                             <View style={styles.vote}>
                                 <Text style={styles.voteNumber}>{item.downvotes}</Text>
-                                <Text style={styles.voteText} onPress={() => this.handleDownvote(index)}>Downvote</Text>
+                                <TouchableHighlight style={styles.voteButton} onPress={() => this.handleDownvote(index)} underlayColor='gray'>
+                                    <Text style={styles.voteText}>Downvote</Text>
+                                </TouchableHighlight>
                             </View>
                         </View>
                     </View>
@@ -201,5 +205,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'blue',
         fontWeight: '300'
+    },
+    voteButton: {
+        flex: 1
     }
 });
