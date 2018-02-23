@@ -8,19 +8,33 @@ export default class ReadIt extends Component {
             topics: [
                 {
                     title: 'How can we code better?',
-                    author: 'Devin'
+                    author: 'Devin',
+                    upvotes: 12,
+                    downvotes: 2
                 },
                 {
                     title: 'React is super cool',
-                    author: 'Jackson'
+                    author: 'Jackson',
+                    upvotes: 12,
+                    downvotes: 2
                 },
                 {
                     title: 'This is a Reddit prototype',
-                    author: 'James'
+                    author: 'James',
+                    upvotes: 12,
+                    downvotes: 2
                 },
                 {
                     title: 'React Native - How to make a ListView?',
-                    author: 'Joel'
+                    author: 'Joel',
+                    upvotes: 12,
+                    downvotes: 2
+                },
+                {
+                    title: 'Apart from counting words and characters, our online editor can help you to improve word choice and writing style, and, optionally, help you to detect grammar mistakes and plagiarism. To check word count, simply place your cursor into the box and type.',
+                    author: 'Harish V',
+                    upvotes: 10000,
+                    downvotes: 100
                 }
               ]
         };
@@ -61,10 +75,12 @@ export default class ReadIt extends Component {
                         </View>
                         <View style={[styles.voteWrapper, this.border('purple')]}>
                             <View style={styles.vote}>
-                                <Text style={styles.item}>Upvote</Text>
+                                <Text style={styles.voteNumber}>{item.upvotes}</Text>
+                                <Text style={styles.voteText}>Upvote</Text>
                             </View>
                             <View style={styles.vote}>
-                                <Text style={styles.item}>Downvote</Text>
+                                <Text style={styles.voteNumber}>{item.downvotes}</Text>
+                                <Text style={styles.voteText}>Downvote</Text>
                             </View>
                         </View>
                     </View>
@@ -89,7 +105,8 @@ export default class ReadIt extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        paddingTop: 10
     },
     footer: {
         flex: 1,
@@ -117,7 +134,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     topicWrapper: {
-        flex: 2
+        flex: 3,
+        justifyContent: 'center'
     },
     topicAuthor: {
         fontWeight: '300',
@@ -126,16 +144,28 @@ const styles = StyleSheet.create({
         paddingLeft: 0
     },
     topicTitle: {
-        fontSize: 20
+        fontSize: 18,
+        fontWeight: '300'
     },
     voteWrapper: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 10
     },
     vote: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 5
+    },
+    voteNumber: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    voteText: {
+        fontSize: 16,
+        color: 'blue',
+        fontWeight: '300'
     }
 });
