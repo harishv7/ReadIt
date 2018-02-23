@@ -4,6 +4,7 @@ import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight, FlatL
 export default class ReadIt extends Component {
     constructor() {
         super();
+
         this.state = {
             topics: [
                 {
@@ -43,18 +44,19 @@ export default class ReadIt extends Component {
     render() {
         return ( 
             <View style={styles.container}>
-                <View style={[styles.header, this.border('yellow')]}>
+                <Text style={styles.heading}>The Top 20</Text>
+                <View style={[styles.header]}>
                     {this.getTopics()}
                 </View>
-                <View style={[styles.footer, this.border('blue')]}>
+                <View style={[styles.footer]}>
                     <View>
                         <TouchableHighlight style={styles.button} onPress={this.buttonPressed} underlayColor='gray'>
-                            <Text>See all</Text>
+                            <Text style={styles.navText}>See all</Text>
                         </TouchableHighlight>
                     </View>
                     <View>
                         <TouchableHighlight style={styles.button} onPress={this.buttonPressed} underlayColor='gray'>
-                            <Text>Add new</Text>
+                            <Text style={styles.navText}>Add new</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -67,27 +69,47 @@ export default class ReadIt extends Component {
             <View style={styles.container}>
               <FlatList
                 data={this.state.topics}
-                renderItem={({item}) => (
+                extraData={this.state}
+                renderItem={({item, index}) => (
                     <View style={styles.topicListItem}>
-                        <View style={[styles.topicWrapper, this.border('red')]}>
+                        <View style={[styles.topicWrapper]}>
                             <Text style={styles.topicTitle}>{item.title}</Text>
                             <Text style={styles.topicAuthor}>written by {item.author}</Text>
                         </View>
-                        <View style={[styles.voteWrapper, this.border('purple')]}>
+                        <View style={[styles.voteWrapper]}>
                             <View style={styles.vote}>
                                 <Text style={styles.voteNumber}>{item.upvotes}</Text>
-                                <Text style={styles.voteText}>Upvote</Text>
+                                <Text style={styles.voteText} onPress={() => this.handleUpvote(index)}>Upvote</Text>
                             </View>
                             <View style={styles.vote}>
                                 <Text style={styles.voteNumber}>{item.downvotes}</Text>
-                                <Text style={styles.voteText}>Downvote</Text>
+                                <Text style={styles.voteText} onPress={() => this.handleDownvote(index)}>Downvote</Text>
                             </View>
                         </View>
                     </View>
                 )}
+                keyExtractor={(item, index) => index}
               />
             </View>
         );
+    }
+
+    handleUpvote(index) {
+        allTopics = this.state.topics;
+        allTopics[index].upvotes += 1;
+
+        this.setState({
+            topics: allTopics
+        });
+    }
+
+    handleDownvote(index) {
+        allTopics = this.state.topics;
+        allTopics[index].downvotes -= 1;
+
+        this.setState({
+            topics: allTopics
+        });
     }
 
     buttonPressed() {
@@ -106,32 +128,44 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
-        paddingTop: 10
+        paddingTop: 15
     },
     footer: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingTop: 10,
+        backgroundColor: '#f8f8ff'
     },
     header: {
-        flex: 5,
+        flex: 7,
         alignItems: 'stretch',
         justifyContent: 'flex-start'
     },
+    heading: {
+        fontSize: 60,
+        fontWeight: '800',
+        color: '#3300CC'
+    },
     button: {
-        borderRadius: 100,
-        borderWidth: 2,
-        width: 100,
-        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: 'cornflowerblue'
+        height: 50,
+        width: 70
+    },
+    navText: {
+        fontSize: 16,
+        color: 'cornflowerblue'
     },
     topicListItem: {
         flexDirection: 'row',
         flex: 1,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingLeft: 5,
+        borderBottomWidth: 0.5,
+        borderColor: 'gray',
+        borderRadius: 10
     },
     topicWrapper: {
         flex: 3,
