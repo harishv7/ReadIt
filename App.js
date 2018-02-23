@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, Image, Button } from 'react-native';
+import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight } from 'react-native';
 
 class Topic extends Component {
     _onPressButton() {
@@ -20,22 +20,47 @@ class Topic extends Component {
 }
 
 export default class ReadIt extends Component {
+    constructor() {
+        super();
+        this.state = {
+            topics: ['Hello World', 'Issac Newton', 'Einstein', 'Nikola Tesla']
+        };
+    }
+
     render() {
         return ( 
             <View style={styles.container}>
                 <View style={[styles.header, this.border('yellow')]}>
-                   <Text>I am a list of topics </Text>
+                   {this.getTopics()}
                 </View>
                 <View style={[styles.footer, this.border('blue')]}>
-                    <View style={this.border('red')}>
-                        <Text>See All</Text>
+                    <View>
+                        <TouchableHighlight style={styles.button} onPress={this.buttonPressed} underlayColor='gray'>
+                            <Text>See all</Text>
+                        </TouchableHighlight>
                     </View>
-                    <View style={this.border('green')}>
-                        <Text>Add new</Text>
+                    <View>
+                        <TouchableHighlight style={styles.button} onPress={this.buttonPressed} underlayColor='gray'>
+                            <Text>Add new</Text>
+                        </TouchableHighlight>
                     </View>
                 </View>
             </View>
         );
+    }
+
+    getTopics() {
+        return this.state.topics.map((topic, index) => {
+            return <View key={index}>
+                <Text>
+                    {index + 1}. {topic}
+                </Text>
+            </View>
+        });
+    }
+
+    buttonPressed() {
+        console.log("Button pressed");
     }
 
     border(color) {
@@ -58,6 +83,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     header: {
-        flex: 5
-    }
+        flex: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    button: {
+        borderRadius: 100,
+        borderWidth: 2,
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'cornflowerblue'
+      }
 });
