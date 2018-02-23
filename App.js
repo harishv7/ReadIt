@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight } from 'react-native';
-
-class Topic extends Component {
-    _onPressButton() {
-        Alert.alert('You tapped the button!');
-    }
-
-    render() {
-        return (
-            <View style={{flex:1, padding: 10}}>
-                <Text>{this.props.title}</Text>
-                <View style={{flexDirection: 'row'}}>
-                    <Button title='Upvote' onPress={this._onPressButton} />
-                    <Button title='Downvote' onPress={this._onPressButton} />
-                </View>
-            </View>
-        );
-    }
-}
+import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight, FlatList } from 'react-native';
 
 export default class ReadIt extends Component {
     constructor() {
         super();
         this.state = {
-            topics: ['Hello World', 'Issac Newton', 'Einstein', 'Nikola Tesla']
+            topics: [
+                {
+                    title: 'How can we code better?',
+                    author: 'Devin'
+                },
+                {
+                    title: 'React is super cool',
+                    author: 'Jackson'
+                },
+                {
+                    title: 'This is a Reddit prototype',
+                    author: 'James'
+                },
+                {
+                    title: 'React Native - How to make a ListView?',
+                    author: 'Joel'
+                }
+              ]
         };
     }
 
@@ -31,7 +30,7 @@ export default class ReadIt extends Component {
         return ( 
             <View style={styles.container}>
                 <View style={[styles.header, this.border('yellow')]}>
-                   {this.getTopics()}
+                    {this.getTopics()}
                 </View>
                 <View style={[styles.footer, this.border('blue')]}>
                     <View>
@@ -50,13 +49,29 @@ export default class ReadIt extends Component {
     }
 
     getTopics() {
-        return this.state.topics.map((topic, index) => {
-            return <View key={index}>
-                <Text>
-                    {index + 1}. {topic}
-                </Text>
+        return (
+            <View style={styles.container}>
+              <FlatList
+                data={this.state.topics}
+                renderItem={({item}) => (
+                    <View style={styles.topicListItem}>
+                        <View style={[styles.topicWrapper, this.border('red')]}>
+                            <Text style={styles.topicTitle}>{item.title}</Text>
+                            <Text style={styles.topicAuthor}>written by {item.author}</Text>
+                        </View>
+                        <View style={[styles.voteWrapper, this.border('purple')]}>
+                            <View style={styles.vote}>
+                                <Text style={styles.item}>Upvote</Text>
+                            </View>
+                            <View style={styles.vote}>
+                                <Text style={styles.item}>Downvote</Text>
+                            </View>
+                        </View>
+                    </View>
+                )}
+              />
             </View>
-        });
+        );
     }
 
     buttonPressed() {
@@ -84,8 +99,8 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 5,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'stretch',
+        justifyContent: 'flex-start'
     },
     button: {
         borderRadius: 100,
@@ -95,5 +110,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: 'cornflowerblue'
-      }
+    },
+    topicListItem: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-around'
+    },
+    topicWrapper: {
+        flex: 2
+    },
+    topicAuthor: {
+        fontWeight: '300',
+        color: 'gray',
+        padding: 5,
+        paddingLeft: 0
+    },
+    topicTitle: {
+        fontSize: 20
+    },
+    voteWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    vote: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
