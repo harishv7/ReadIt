@@ -19,31 +19,45 @@ class Topic extends Component {
     }
 }
 
-export default class Topics extends Component {
+export default class ReadIt extends Component {
     render() {
         return ( 
-            <View style={{flex:1}}>
-                <Topic title='Welcome to my life.' />
-                <Topic title='Simple Plan.' />
-                <Topic title='Linkin Park.' />
+            <View style={styles.container}>
+                <View style={[styles.header, this.border('yellow')]}>
+                   <Text>I am a list of topics </Text>
+                </View>
+                <View style={[styles.footer, this.border('blue')]}>
+                    <View style={this.border('red')}>
+                        <Text>See All</Text>
+                    </View>
+                    <View style={this.border('green')}>
+                        <Text>Add new</Text>
+                    </View>
+                </View>
             </View>
         );
+    }
+
+    border(color) {
+        return {
+            borderColor: color,
+            borderWidth: 4
+        };
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        alignItems: 'stretch'
+    },
+    footer: {
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around'
     },
-    bigBlue: {
-        color: 'blue',
-        fontWeight: 'bold',
-        fontSize: 30
-    },
-    red: {
-        color: 'red'
+    header: {
+        flex: 5
     }
 });
