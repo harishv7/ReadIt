@@ -59,7 +59,9 @@ class HomeScreen extends Component {
                         </TouchableHighlight>
                     </View>
                     <View>
-                        <TouchableHighlight style={styles.button} onPress={this.buttonPressed} underlayColor='gray'>
+                        <TouchableHighlight style={styles.button} 
+                        underlayColor='gray'
+                        onPress={() => this.props.navigation.navigate('AddNewTopic')}>
                             <Text style={styles.navText}>Add new</Text>
                         </TouchableHighlight>
                     </View>
