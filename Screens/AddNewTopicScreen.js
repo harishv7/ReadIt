@@ -1,42 +1,66 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TextInput, Button, KeyboardAvoidingView } from 'react-native';
+import { Alert, StyleSheet, Text, View, TextInput, Button, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 class AddNewTopicScreen extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            topic: null,
+            author: null
+        }
+    }
+
+    // callback from 
+    goBack(topic, author) {    
+        console.log("Calling goback");
+        this.props.navigation.goBack();
+        this.props.navigation.state.params.onSubmit({ topic: this.state.topic, author: this.state.author });
+    }
+
     render() {
       return (
-        <View>
+          <KeyboardAvoidingView
+                style={styles.KeyboardAvoidingViewContainer}
+                behavior="padding"
+            >
             <Text style={styles.heading}>Something you want to share?</Text>
-            <View>
-                <Text style={styles.topicPrompt}>Add it here</Text>
+            <ScrollView 
+            scrollEnabled={false}
+            style={styles.scrollView}
+            >
+            
                 <TextInput
                     style={styles.topicInput}
+                    placeholder="Your awesome topic goes here..."
+                    onChangeText={(text) => this.setState({topic: text})}
                     multiline={true}
                     maxLength={255}
-                />
-            </View>
-            <View>
-                <Text style={styles.topicPrompt}>What's your cool name?</Text>
+                /> 
+            
+            </ScrollView> 
+            <ScrollView 
+            scrollEnabled={false}
+            style={styles.scrollView}
+            >  
                 <TextInput
                     style={styles.nameInput}
+                    placeholder="Your cool name..."
                     multiline={true}
                     maxLength={70}
+                    onChangeText={(text) => this.setState({author: text})}
                 />
-            </View>
+            </ScrollView>
             <View style={styles.buttons}>
                 <Button
                 style={styles.submitButton}
-                onPress={this.submitButtonPressed()}
-                title="Learn More"
-                color="#841584"
+                onPress={() => this.goBack()}
+                title="Submit"
+                color="blue"
                 accessibilityLabel="Submit this topic"
                 />
             </View>
-        </View>
+            </KeyboardAvoidingView>
       );
-    }
-
-    submitButtonPressed() {
-        console.log('Submit button');
     }
 
     border(color) {
@@ -48,10 +72,21 @@ class AddNewTopicScreen extends React.Component {
   }
 
   const styles = StyleSheet.create({
+    outerContainer: {
+        flex: 1,
+    },
     container: {
         flex: 1,
-        alignItems: 'stretch',
+        alignItems: 'flex-start',
         paddingTop: 15
+    },
+    KeyboardAvoidingViewContainer: {
+        flex: 1,
+        alignItems: 'stretch',
+        justifyContent: 'flex-end'
+    },
+    scrollView: {
+        flex: 1
     },
     heading: {
         fontSize: 44,
@@ -69,14 +104,14 @@ class AddNewTopicScreen extends React.Component {
         borderColor: 'gray', 
         borderWidth: 2, 
         fontSize: 24,
-        height: 70
+        height: 100
     },
     nameInput: {
         margin: 10,
         borderColor: 'gray', 
         borderWidth: 2, 
         fontSize: 24,
-        height: 30
+        height: 50
     },
     buttons: {
         flex: 1,

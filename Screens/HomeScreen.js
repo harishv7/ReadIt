@@ -43,6 +43,24 @@ class HomeScreen extends Component {
         };
     }
 
+    // callback for new topic submitted
+    onSubmit = data => {
+        // process submitted topic
+        console.log(data);
+        const topic = data.topic.trim();
+        const author = data.author.trim();
+        var topics = this.state.topics;
+        topics.push({
+            author: author,
+            title: topic,
+            upvotes: 0,
+            downvotes: 0
+        });
+        this.setState({
+            topics: topics
+        });
+    };
+
     render() {
         return ( 
             <View style={styles.container}>
@@ -61,7 +79,7 @@ class HomeScreen extends Component {
                     <View>
                         <TouchableHighlight style={styles.button} 
                         underlayColor='gray'
-                        onPress={() => this.props.navigation.navigate('AddNewTopic')}>
+                        onPress={() => this.props.navigation.navigate('AddNewTopic', { onSubmit: this.onSubmit })}>
                             <Text style={styles.navText}>Add new</Text>
                         </TouchableHighlight>
                     </View>
