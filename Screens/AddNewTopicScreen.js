@@ -27,8 +27,7 @@ class AddNewTopicScreen extends React.Component {
             <ScrollView 
             scrollEnabled={false}
             style={styles.scrollView}
-            >
-            
+            >   
                 <TextInput
                     style={styles.topicInput}
                     placeholder="Your awesome topic goes here..."
@@ -36,7 +35,6 @@ class AddNewTopicScreen extends React.Component {
                     multiline={true}
                     maxLength={255}
                 /> 
-            
             </ScrollView> 
             <ScrollView 
             scrollEnabled={false}

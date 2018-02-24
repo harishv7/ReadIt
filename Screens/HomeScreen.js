@@ -2,44 +2,34 @@ import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight, FlatList } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
+// SORTED array of objects
+var topics = [{
+    title: 'How can we code better?',
+    author: 'Devin',
+    upvotes: 2,
+    downvotes: 2
+}];
+
 class HomeScreen extends Component {
     constructor() {
         super();
 
-        this.state = {
-            topics: [
-                {
-                    title: 'How can we code better?',
-                    author: 'Devin',
-                    upvotes: 12,
-                    downvotes: 2
-                },
-                {
-                    title: 'React is super cool',
-                    author: 'Jackson',
-                    upvotes: 12,
-                    downvotes: 2
-                },
-                {
+        // get top 20
+        var topTwentyTopics = [];
+        var i = 0;
 
-                    title: 'This is a Reddit prototype',
-                    author: 'James',
-                    upvotes: 12,
-                    downvotes: 2
-                },
-                {
-                    title: 'React Native - How to make a ListView?',
-                    author: 'Joel',
-                    upvotes: 12,
-                    downvotes: 2
-                },
-                {
-                    title: 'Apart from counting words and characters, our online editor can help you to improve word choice and writing style, and, optionally, help you to detect grammar mistakes and plagiarism. To check word count, simply place your cursor into the box and type.',
-                    author: 'Harish V',
-                    upvotes: 10000,
-                    downvotes: 100
-                }
-              ]
+        if(topics.length < 20) {
+            i = topics.length - 1;
+        } else {
+            i = 19;
+        }
+        
+        while(i >= 0) {
+            topTwentyTopics.push(topics[i--]);
+        }
+
+        this.state = {
+            topics: topTwentyTopics
         };
     }
 
@@ -123,8 +113,17 @@ class HomeScreen extends Component {
     }
 
     handleUpvote(index) {
-        allTopics = this.state.topics;
+        var allTopics = this.state.topics;
         allTopics[index].upvotes += 1;
+    
+        // bubble down the current topic to keep array sorted
+        for(var i = allTopics.length - 1; i >= 1; i--) {
+            if(allTopics[i].upvotes > allTopics[i-1].upvotes) {
+                var temp = allTopics[i-1];
+                allTopics[i-1] = allTopics[i];
+                allTopics[i] = temp;
+            }
+        }
 
         this.setState({
             topics: allTopics
@@ -139,11 +138,7 @@ class HomeScreen extends Component {
             topics: allTopics
         });
     }
-
-    buttonPressed() {
-        console.log("Button pressed");
-    }
-
+    
     border(color) {
         return {
             borderColor: color,
