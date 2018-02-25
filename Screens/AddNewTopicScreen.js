@@ -21,7 +21,7 @@ class AddNewTopicScreen extends React.Component {
       return (
           <KeyboardAvoidingView
                 style={styles.KeyboardAvoidingViewContainer}
-                behavior="padding"
+                behavior="height"
             >
             <Text style={styles.heading}>Something you want to share?</Text>
             <ScrollView 

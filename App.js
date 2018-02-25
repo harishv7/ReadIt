@@ -4,20 +4,24 @@ import { StackNavigator } from 'react-navigation';
 
 const HomeScreen = require('./Screens/HomeScreen');
 const AddNewTopicScreen = require('./Screens/AddNewTopicScreen');
+const AllTopicsScreen = require('./Screens/AllTopicsScreen');
 
 const RootStack = StackNavigator({
     Home: {
-      screen: HomeScreen,
+        screen: HomeScreen
     },
     AddNewTopic: {
         screen: AddNewTopicScreen
+    },
+    AllTopics: {
+        screen: AllTopicsScreen
     }
-  }, {
-      initialRouteName: 'Home'
-  });
+}, {
+    initialRouteName: 'Home'
+});
 
-  export default class App extends React.Component {
+export default class App extends React.Component {
     render() {
-      return <RootStack />;
+        return <RootStack / > ;
     }
-  }
+}

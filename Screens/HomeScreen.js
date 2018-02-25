@@ -2,35 +2,47 @@ import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight, FlatList } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-// SORTED array of objects
-var topics = [{
-    title: 'How can we code better?',
-    author: 'Devin',
-    upvotes: 2,
-    downvotes: 2
-}];
+const Topics = require('../Topics');
+var topics = new Topics();
 
 class HomeScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Home',
+         headerTitleStyle : {textAlign: 'center',alignSelf:'center'},
+            headerStyle:{
+                backgroundColor:'white',
+            },
+        });
+
     constructor() {
         super();
 
         // get top 20
-        var topTwentyTopics = [];
-        var i = 0;
-
-        if(topics.length < 20) {
-            i = topics.length - 1;
-        } else {
-            i = 19;
-        }
-        
-        while(i >= 0) {
-            topTwentyTopics.push(topics[i--]);
-        }
+        var topTwentyTopics =  topics.getTopTwentyTopics();
 
         this.state = {
             topics: topTwentyTopics
         };
+
+        // bind this to upvote and downvote methods for use in AllTopicsScreen
+        this.handleDownvote = this.handleDownvote.bind(this);
+        this.handleUpvote =  this.handleUpvote.bind(this);
+    }
+
+    getTopTwentyTopics(allTopics) {
+        var topTwentyTopics = [];
+        var i = 0;
+
+        if(allTopics.length < 20) {
+            i = allTopics.length - 1;
+        } else {
+            i = 19;
+        }
+        var j = 0;
+        while(j <= i) {
+            topTwentyTopics.push(allTopics[j++]);
+        }
+        return topTwentyTopics;
     }
 
     // callback for new topic submitted
@@ -39,15 +51,11 @@ class HomeScreen extends Component {
         console.log(data);
         const topic = data.topic.trim();
         const author = data.author.trim();
-        var topics = this.state.topics;
-        topics.push({
-            author: author,
-            title: topic,
-            upvotes: 0,
-            downvotes: 0
-        });
+        
+        topics.addNewTopic(author, topic);
+
         this.setState({
-            topics: topics
+            topics: topics.getTopTwentyTopics()
         });
     };
 
@@ -62,7 +70,7 @@ class HomeScreen extends Component {
                     <View>
                         <TouchableHighlight style={styles.button} 
                         underlayColor='gray'
-                        onPress={() => this.props.navigation.navigate('AddNewTopic')}>
+                        onPress={() => this.props.navigation.navigate('AllTopics', { topics: topics, handleUpvote: this.handleUpvote, handleDownvote: this.handleDownvote })}>
                             <Text style={styles.navText}>See all</Text>
                         </TouchableHighlight>
                     </View>
@@ -113,29 +121,18 @@ class HomeScreen extends Component {
     }
 
     handleUpvote(index) {
-        var allTopics = this.state.topics;
-        allTopics[index].upvotes += 1;
-    
-        // bubble down the current topic to keep array sorted
-        for(var i = allTopics.length - 1; i >= 1; i--) {
-            if(allTopics[i].upvotes > allTopics[i-1].upvotes) {
-                var temp = allTopics[i-1];
-                allTopics[i-1] = allTopics[i];
-                allTopics[i] = temp;
-            }
-        }
+        topics.addNewUpvote(index);
 
         this.setState({
-            topics: allTopics
+            topics: topics.getTopTwentyTopics()
         });
     }
 
     handleDownvote(index) {
-        allTopics = this.state.topics;
-        allTopics[index].downvotes -= 1;
+        topics.addNewDownvote(index);
 
         this.setState({
-            topics: allTopics
+            topics: topics.getTopTwentyTopics()
         });
     }
     
