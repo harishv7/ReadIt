@@ -10,44 +10,22 @@ class AddNewTopicScreen extends React.Component {
         }
     }
 
-    // callback from 
+    // navigate back to HomeScreen
     goBack(topic, author) {    
-        console.log("Calling goback");
         this.props.navigation.goBack();
         this.props.navigation.state.params.onSubmit({ topic: this.state.topic, author: this.state.author });
     }
 
     render() {
       return (
-          <KeyboardAvoidingView
-                style={styles.KeyboardAvoidingViewContainer}
-                behavior="height"
-            >
+        <KeyboardAvoidingView
+            style={styles.KeyboardAvoidingViewContainer}
+            behavior="height"
+        >
             <Text style={styles.heading}>Something you want to share?</Text>
-            <ScrollView 
-            scrollEnabled={false}
-            style={styles.scrollView}
-            >   
-                <TextInput
-                    style={styles.topicInput}
-                    placeholder="Your awesome topic goes here..."
-                    onChangeText={(text) => this.setState({topic: text})}
-                    multiline={true}
-                    maxLength={255}
-                /> 
-            </ScrollView> 
-            <ScrollView 
-            scrollEnabled={false}
-            style={styles.scrollView}
-            >  
-                <TextInput
-                    style={styles.nameInput}
-                    placeholder="Your cool name..."
-                    multiline={true}
-                    maxLength={70}
-                    onChangeText={(text) => this.setState({author: text})}
-                />
-            </ScrollView>
+            
+            {this.addTextInputBoxes()}
+            
             <View style={styles.buttons}>
                 <Button
                 style={styles.submitButton}
@@ -57,15 +35,39 @@ class AddNewTopicScreen extends React.Component {
                 accessibilityLabel="Submit this topic"
                 />
             </View>
-            </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
       );
     }
 
-    border(color) {
-        return {
-            borderColor: color,
-            borderWidth: 4
-        };
+    addTextInputBoxes() {
+        return (
+            <View style={{flex:1}}>
+                <ScrollView 
+                scrollEnabled={false}
+                style={styles.scrollView}
+                >   
+                    <TextInput
+                        style={styles.topicInput}
+                        placeholder="Your awesome topic goes here..."
+                        onChangeText={(text) => this.setState({topic: text})}
+                        multiline={true}
+                        maxLength={255}
+                    /> 
+                </ScrollView> 
+                <ScrollView 
+                scrollEnabled={false}
+                style={styles.scrollView}
+                >  
+                    <TextInput
+                        style={styles.nameInput}
+                        placeholder="Your cool name..."
+                        multiline={true}
+                        maxLength={70}
+                        onChangeText={(text) => this.setState({author: text})}
+                    />
+                </ScrollView>
+            </View>
+        );
     }
   }
 

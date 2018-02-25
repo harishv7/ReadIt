@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Button, TouchableHighlight, FlatList } from 'react-native';
 
-const Topics = require('../Topics');
-
 class AllTopicsScreen extends React.Component {
     constructor(props) {
         super(props);

@@ -33,6 +33,39 @@ class HomeScreen extends Component {
         this.handleUpvote =  this.handleUpvote.bind(this);
     }
 
+    render() {
+        return ( 
+            <View style={styles.container}>
+                <Text style={styles.heading}>The Top 20</Text>
+                <View style={[styles.header]}>
+                    {this.getTopics()}
+                </View>
+                {this.addFooter()}
+            </View>
+        );
+    }
+
+    addFooter() {
+        return (
+            <View style={[styles.footer]}>
+                <View>
+                    <TouchableHighlight style={styles.button} 
+                    underlayColor='gray'
+                    onPress={() => this.props.navigation.navigate('AllTopics', { topics: topics, handleUpvote: this.handleUpvote, handleDownvote: this.handleDownvote })}>
+                        <Text style={styles.navText}>See all</Text>
+                    </TouchableHighlight>
+                </View>
+                <View>
+                    <TouchableHighlight style={styles.button} 
+                    underlayColor='gray'
+                    onPress={() => this.props.navigation.navigate('AddNewTopic', { onSubmit: this.onSubmit })}>
+                        <Text style={styles.navText}>Add new</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+        );
+    }
+
     getTopTwentyTopics(allTopics) {
         var topTwentyTopics = [];
         var i = 0;
@@ -62,33 +95,6 @@ class HomeScreen extends Component {
             topics: topics.getTopTwentyTopics()
         });
     };
-
-    render() {
-        return ( 
-            <View style={styles.container}>
-                <Text style={styles.heading}>The Top 20</Text>
-                <View style={[styles.header]}>
-                    {this.getTopics()}
-                </View>
-                <View style={[styles.footer]}>
-                    <View>
-                        <TouchableHighlight style={styles.button} 
-                        underlayColor='gray'
-                        onPress={() => this.props.navigation.navigate('AllTopics', { topics: topics, handleUpvote: this.handleUpvote, handleDownvote: this.handleDownvote })}>
-                            <Text style={styles.navText}>See all</Text>
-                        </TouchableHighlight>
-                    </View>
-                    <View>
-                        <TouchableHighlight style={styles.button} 
-                        underlayColor='gray'
-                        onPress={() => this.props.navigation.navigate('AddNewTopic', { onSubmit: this.onSubmit })}>
-                            <Text style={styles.navText}>Add new</Text>
-                        </TouchableHighlight>
-                    </View>
-                </View>
-            </View>
-        );
-    }
 
     getTopics() {
         return (
