@@ -4,6 +4,8 @@ const Topics = require('../Topics');
 var topics = new Topics();
 
 test('getTopTwentyTopics() returns 20 topics', () => {
+    topics.clearAllTopics();
+
     var i = 0,
         j = 0;
     for (i = 0; i < 40; i++) {
