@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Button, TouchableHighlight, FlatList } from 'react-native';
 
 const Topics = require('../Topics');
-// var topics = new Topics();
 
 class AllTopicsScreen extends React.Component {
     constructor(props) {
@@ -40,28 +39,40 @@ class AllTopicsScreen extends React.Component {
                 extraData={this.state}
                 renderItem={({item, index}) => (
                     <View style={styles.topicListItem}>
-                        <View style={[styles.topicWrapper]}>
-                            <Text style={styles.topicTitle}>{item.title}</Text>
-                            <Text style={styles.topicAuthor}>written by {item.author}</Text>
-                        </View>
-                        <View style={[styles.voteWrapper]}>
-                            <View style={styles.vote}>
-                                <Text style={styles.voteNumber}>{item.upvotes}</Text>
-                                <TouchableHighlight style={styles.voteButton} onPress={() => this.handleUpvote(index, topics)} underlayColor='gray'>
-                                    <Text style={styles.voteText}>Upvote</Text>
-                                </TouchableHighlight>
-                            </View>
-                            <View style={styles.vote}>
-                                <Text style={styles.voteNumber}>{item.downvotes}</Text>
-                                <TouchableHighlight style={styles.voteButton} onPress={() => this.handleDownvote(index, topics)} underlayColor='gray'>
-                                    <Text style={styles.voteText}>Downvote</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
+                        {this.addTopicBox(item, index)}
+                        {this.addVoteButtons(item, index, topics)}
                     </View>
                 )}
                 keyExtractor={(item, index) => index}
               />
+            </View>
+        );
+    }
+
+    addTopicBox(item,index) {
+        return (
+            <View style={[styles.topicWrapper]}>
+                <Text style={styles.topicTitle}>{item.title}</Text>
+                <Text style={styles.topicAuthor}>written by {item.author}</Text>
+            </View>
+        );
+    }
+
+    addVoteButtons(item, index, topics) {
+        return (
+            <View style={[styles.voteWrapper]}>
+                <View style={styles.vote}>
+                    <Text style={styles.voteNumber}>{item.upvotes}</Text>
+                    <TouchableHighlight style={styles.voteButton} onPress={() => this.handleUpvote(index, topics)} underlayColor='gray'>
+                        <Text style={styles.voteText}>Upvote</Text>
+                    </TouchableHighlight>
+                </View>
+                <View style={styles.vote}>
+                    <Text style={styles.voteNumber}>{item.downvotes}</Text>
+                    <TouchableHighlight style={styles.voteButton} onPress={() => this.handleDownvote(index, topics)} underlayColor='gray'>
+                        <Text style={styles.voteText}>Downvote</Text>
+                    </TouchableHighlight>
+                </View>
             </View>
         );
     }

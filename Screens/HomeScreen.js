@@ -1,7 +1,11 @@
+/**
+ * This is HomeScreen for the ReadIt app
+ */
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Image, Button, TouchableHighlight, FlatList } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
+// instantiate a new object for managing topics
 const Topics = require('../Topics');
 var topics = new Topics();
 
@@ -17,7 +21,7 @@ class HomeScreen extends Component {
     constructor() {
         super();
 
-        // get top 20
+        // get top 20 topics and set the state
         var topTwentyTopics =  topics.getTopTwentyTopics();
 
         this.state = {
@@ -45,7 +49,7 @@ class HomeScreen extends Component {
         return topTwentyTopics;
     }
 
-    // callback for new topic submitted
+    // callback for new topic submitted from AddNewTopicScreen
     onSubmit = data => {
         // process submitted topic
         console.log(data);
@@ -134,13 +138,6 @@ class HomeScreen extends Component {
         this.setState({
             topics: topics.getTopTwentyTopics()
         });
-    }
-    
-    border(color) {
-        return {
-            borderColor: color,
-            borderWidth: 4
-        };
     }
 }
 

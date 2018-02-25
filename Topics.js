@@ -1,22 +1,26 @@
+/** 
+ * An in-memory data structure to handle the list of topics submitted.
+ */
 class Topics {
     constructor() {
-        if (!Topics.instance) {
-            this.topics = [{
-                author: 'Davis',
-                title: 'Hello World!',
-                upvotes: 2,
-                downvotes: 2
-            }];
-            Topics.instance = this;
-        }
-
-        return Topics.instance;
+        this.topics = [{
+            author: 'Davis',
+            title: 'Hello World!',
+            upvotes: 2,
+            downvotes: 2
+        }];
     }
 
+    /** 
+     * Returns all the topics
+     */
     getAllTopics() {
         return this.topics;
     }
 
+    /** 
+     * Returns only the top 20 topics by upvotes
+     */
     getTopTwentyTopics() {
         var topTwentyTopics = [];
         var i = 0;
@@ -34,6 +38,10 @@ class Topics {
         return topTwentyTopics;
     }
 
+    /**
+     * Adds an upvote to a topic
+     * @param {number} index 
+     */
     addNewUpvote(index) {
         this.topics[index].upvotes += 1;
 
@@ -52,11 +60,21 @@ class Topics {
         return topTwentyTopics;
     }
 
+    /**
+     * Adds a downvote to a topic
+     * @param {number} index 
+     */
     addNewDownvote(index) {
         this.topics[index].downvotes -= 1;
         return true;
     }
 
+    /**
+     * Adds a new topic as per the title and author given.
+     * New topics have a default of 0 upvotes and 0 downvotes.
+     * @param {string} author 
+     * @param {string} title 
+     */
     addNewTopic(author, title) {
         this.topics.push({
             author: author,
