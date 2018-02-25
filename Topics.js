@@ -55,7 +55,6 @@ class Topics {
         }
 
         var topTwentyTopics = this.getTopTwentyTopics(this.topics);
-        console.log(topTwentyTopics);
 
         return topTwentyTopics;
     }
@@ -65,7 +64,7 @@ class Topics {
      * @param {number} index 
      */
     addNewDownvote(index) {
-        this.topics[index].downvotes -= 1;
+        this.topics[index].downvotes += 1;
         return true;
     }
 
@@ -83,6 +82,21 @@ class Topics {
             downvotes: 0
         });
         return true;
+    }
+
+    /**
+     * Returns a specific topic by index.
+     * @param {number} index 
+     */
+    getTopic(index) {
+        return this.topics[index];
+    }
+
+    /**
+     * For testing purposes.
+     */
+    clearAllTopics() {
+        this.topics = [];
     }
 }
 

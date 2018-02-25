@@ -85,7 +85,6 @@ class HomeScreen extends Component {
     // callback for new topic submitted from AddNewTopicScreen
     onSubmit = data => {
         // process submitted topic
-        console.log(data);
         const topic = data.topic.trim();
         const author = data.author.trim();
         
