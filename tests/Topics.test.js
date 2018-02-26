@@ -1,3 +1,8 @@
+/**
+ * This is a test for the Topics class, which is the main in-memory data structure 
+ * facilitating the upvotes, downvotes, retrieval and other miscellaneous operations 
+ * on the topics.
+ */
 import React from 'react';
 
 const Topics = require('../Topics');
