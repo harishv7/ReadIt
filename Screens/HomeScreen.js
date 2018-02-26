@@ -38,13 +38,14 @@ class HomeScreen extends Component {
             <View style={styles.container}>
                 <Text style={styles.heading}>The Top 20</Text>
                 <View style={[styles.header]}>
-                    {this.getTopics()}
+                    {this.getTopicsContiner()}
                 </View>
                 {this.addFooter()}
             </View>
         );
     }
 
+    // Auxillary function
     addFooter() {
         return (
             <View style={[styles.footer]}>
@@ -66,27 +67,20 @@ class HomeScreen extends Component {
         );
     }
 
-    getTopTwentyTopics(allTopics) {
-        var topTwentyTopics = [];
-        var i = 0;
-
-        if(allTopics.length < 20) {
-            i = allTopics.length - 1;
-        } else {
-            i = 19;
-        }
-        var j = 0;
-        while(j <= i) {
-            topTwentyTopics.push(allTopics[j++]);
-        }
-        return topTwentyTopics;
-    }
-
     // callback for new topic submitted from AddNewTopicScreen
     onSubmit = data => {
         // process submitted topic
-        const topic = data.topic.trim();
-        const author = data.author.trim();
+        var topic;
+        var author;
+
+        if(data.topic == null) {
+            topic = "null";
+        } else if(data.author == null) {
+            author = "null";
+        } else {
+            data.topic.trim();
+            data.author.trim();
+        }
         
         topics.addNewTopic(author, topic);
 
@@ -94,8 +88,9 @@ class HomeScreen extends Component {
             topics: topics.getTopTwentyTopics()
         });
     };
-
-    getTopics() {
+    
+    // Auxillary function
+    getTopicsContiner() {
         return (
             <View style={styles.container}>
               <FlatList
@@ -129,6 +124,10 @@ class HomeScreen extends Component {
         );
     }
 
+    /**
+     * Handler for when upvote button is pressed.
+     * @param {number} index 
+     */
     handleUpvote(index) {
         topics.addNewUpvote(index);
 
@@ -137,6 +136,10 @@ class HomeScreen extends Component {
         });
     }
 
+    /**
+     * Handler when downvote button is pressed
+     * @param {number} index 
+     */
     handleDownvote(index) {
         topics.addNewDownvote(index);
 
@@ -161,7 +164,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f8ff'
     },
     header: {
-        flex: 7,
+        flex: 8,
         alignItems: 'stretch',
         justifyContent: 'flex-start'
     },
@@ -177,8 +180,9 @@ const styles = StyleSheet.create({
         width: 70
     },
     navText: {
-        fontSize: 16,
-        color: 'cornflowerblue'
+        fontSize: 18,
+        color: 'cornflowerblue',
+        fontWeight: '300'
     },
     topicListItem: {
         flexDirection: 'row',

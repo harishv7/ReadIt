@@ -1,3 +1,6 @@
+/**
+ * This screen lists all the topics.
+ */
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, Button, TouchableHighlight, FlatList } from 'react-native';
 
@@ -9,6 +12,11 @@ class AllTopicsScreen extends React.Component {
         };
     }
 
+    /**
+     * 
+     * @param {number} index 
+     * @param {Object} topics 
+     */
     handleUpvote(index, topics) {
         this.props.navigation.state.params.handleUpvote(index);
 
@@ -17,6 +25,11 @@ class AllTopicsScreen extends React.Component {
         });
     }
 
+    /**
+     * Handler for when downvote is pressed
+     * @param {number} index 
+     * @param {Object} topics 
+     */
     handleDownvote(index, topics) {
         this.props.navigation.state.params.handleDownvote(index);
 
@@ -29,7 +42,7 @@ class AllTopicsScreen extends React.Component {
         var topics = this.props.navigation.state.params.topics;
 
         return (
-            <View>
+            <View style={{flex:1}}>
                 <Text style={styles.heading}>The Complete</Text>
                 <Text style={styles.heading}>List</Text>
                 <FlatList
@@ -47,6 +60,7 @@ class AllTopicsScreen extends React.Component {
         );
     }
 
+    // Auxillary function
     addTopicBox(item,index) {
         return (
             <View style={[styles.topicWrapper]}>
@@ -56,6 +70,7 @@ class AllTopicsScreen extends React.Component {
         );
     }
 
+    // Auxillary function
     addVoteButtons(item, index, topics) {
         return (
             <View style={[styles.voteWrapper]}>

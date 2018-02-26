@@ -1,5 +1,8 @@
+/**
+ * This screen allows the user to add a new topic.
+ */
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TextInput, Button, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Alert, StyleSheet, Text, View, TextInput, Modal, Button, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 class AddNewTopicScreen extends React.Component {
     constructor() {
@@ -10,7 +13,11 @@ class AddNewTopicScreen extends React.Component {
         }
     }
 
-    // navigate back to HomeScreen
+    /**
+     * Navigates back to HomeScreen, passing the topic and author to the callback.
+     * @param {string} topic 
+     * @param {string} author 
+     */
     goBack(topic, author) {    
         this.props.navigation.goBack();
         this.props.navigation.state.params.onSubmit({ topic: this.state.topic, author: this.state.author });
@@ -19,7 +26,7 @@ class AddNewTopicScreen extends React.Component {
     render() {
       return (
         <KeyboardAvoidingView
-            style={styles.KeyboardAvoidingViewContainer}
+            style={styles.keyboardAvoidingViewContainer}
             behavior="height"
         >
             <Text style={styles.heading}>Something you want to share?</Text>
@@ -39,6 +46,7 @@ class AddNewTopicScreen extends React.Component {
       );
     }
 
+    // Auxillary function
     addTextInputBoxes() {
         return (
             <View style={{flex:1}}>
@@ -80,7 +88,7 @@ class AddNewTopicScreen extends React.Component {
         alignItems: 'flex-start',
         paddingTop: 15
     },
-    KeyboardAvoidingViewContainer: {
+    keyboardAvoidingViewContainer: {
         flex: 1,
         alignItems: 'stretch',
         justifyContent: 'flex-end'
