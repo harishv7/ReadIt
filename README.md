@@ -5,3 +5,5 @@ This gave the project a basic structure to begin with. Otherwise, the main logic
 As seen in the `package.json` file, the project has dependencies, mainly `react`, `react-native` and `react-navigation`.
 
 The app sports three main screens - a HomeScreen (to view the top 20 topics sorted by upvotes in a descending order), AddNewTopicScreen (to allow users to add a new topic) and AllTopicsScreen (to allow user to see all topics so far).
+
+To run the app, simply enter `npm start` on the root directory of the project. To run the tests, simply enter `npm test` on the terminal.
